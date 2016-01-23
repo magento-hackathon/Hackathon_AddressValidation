@@ -1,0 +1,31 @@
+{
+  "name": "hackathon/address-validation",
+  "description": "Magento 2 Address Validation",
+  "type": "magento2-module",
+  "authors": [
+    {
+      "name": "Arjen Miedema",
+      "email": "arjenmiedema@gmail.com",
+      "role": "developer"
+    },
+    {
+      "name": "Jan-Marten de Boer",
+      "email": "github@johmanx.com",
+      "homepage": "http://johmanx.com",
+      "role": "developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0",
+    "magento/product-community-edition": "2.0.*"
+  },
+  "autoload": {
+    "files": [
+      "src/Hackathon/AddressValidation/registration.php"
+    ],
+    "psr-4": {
+      "VendorName\\MyModule\\": "src/Hackathon/AddressValidation/"
+    }
+  }
+}
