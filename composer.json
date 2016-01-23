@@ -22,7 +22,7 @@
   },
   "autoload": {
     "files": [
-      "src/Hackathon/AddressValidation/registration.php"
+      "registration.php"
     ],
     "psr-4": {
       "VendorName\\MyModule\\": "src/Hackathon/AddressValidation/"
