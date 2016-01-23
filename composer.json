@@ -1,5 +1,5 @@
 {
-  "name": "hackathon/address-validation",
+  "name": "hackathon/module-address-validation",
   "description": "Magento 2 Address Validation",
   "type": "magento2-module",
   "authors": [
