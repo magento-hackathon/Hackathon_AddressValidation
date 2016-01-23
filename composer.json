@@ -11,7 +11,6 @@
     {
       "name": "Jan-Marten de Boer",
       "email": "github@johmanx.com",
-      "homepage": "http://johmanx.com",
       "role": "developer"
     }
   ],
@@ -25,7 +24,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "VendorName\\MyModule\\": "src/Hackathon/AddressValidation/"
+      "Hackathon\\AddressValidation\\": ""
     }
   }
 }
