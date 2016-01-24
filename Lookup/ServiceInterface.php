@@ -15,21 +15,21 @@ interface ServiceInterface
      * Get an address for the given request.
      *
      * @param AddressRequestInterface $request
-     * @return AddressInterface
+     * @return AddressInterface[]
      * @throws InvalidAddressException when no country code is set.
      * @throws InvalidAddressException when an adapter returned an invalid
      *   address entity.
      * @throws AddressNotFoundException when no address can be found.
      */
-    public function getAddress(AddressRequestInterface $request);
+    public function getAddresses(AddressRequestInterface $request);
 
     /**
      * Get an address for the supplied request parameters.
      *
      * @param string[] $params
-     * @return AddressInterface
+     * @return AddressInterface[]
      */
-    public function getAddressFromRequestParams(array $params);
+    public function getAddressesFromRequestParams(array $params);
 
     /**
      * Create an address request for the supplied list of params.
@@ -43,7 +43,7 @@ interface ServiceInterface
      * Get an address for the supplied Magento App Request.
      *
      * @param RequestInterface $request
-     * @return AddressInterface
+     * @return AddressInterface[]
      */
-    public function getAddressFromRequest(RequestInterface $request);
+    public function getAddressesFromRequest(RequestInterface $request);
 }

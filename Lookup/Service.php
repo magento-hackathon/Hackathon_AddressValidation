@@ -32,13 +32,13 @@ class Service implements ServiceInterface
      * Get an address for the given request.
      *
      * @param AddressRequestInterface $request
-     * @return \Magento\Quote\Api\Data\AddressInterface
+     * @return AddressInterface[]
      * @throws InvalidAddressException when no country code is set.
      * @throws InvalidAddressException when an adapter returned an invalid
      *   address entity.
      * @throws AddressNotFoundException when no address can be found.
      */
-    public function getAddress(AddressRequestInterface $request)
+    public function getAddresses(AddressRequestInterface $request)
     {
         $countryCode = $request->getCountryId();
 
@@ -46,45 +46,49 @@ class Service implements ServiceInterface
             throw new InvalidAddressException('Missing country code');
         }
 
+        $adapter = null;
         $adapters = $this->adapterFactory->create($countryCode);
 
-        $address = null;
+        $addresses = [];
 
         foreach ($adapters as $adapter) {
-            $address = $adapter->getAddress($request);
+            $addresses = $adapter->getAddresses($request);
 
-            if (!empty($address)) {
-                if (!($address instanceof AddressInterface)) {
-                    throw new InvalidAddressException(
-                        sprintf(
-                            'Invalid address supplied by adapter: %s',
-                            get_class($adapter)
-                        )
-                    );
-                }
-
+            if (!empty($addresses)) {
                 break;
             }
         }
 
-        if (!($address instanceof AddressInterface)) {
+        if (empty($addresses)) {
             throw new AddressNotFoundException(
                 'Could not find an address for the given request.'
             );
         }
 
-        return $address;
+        foreach ($addresses as $address) {
+            if (!($address instanceof AddressInterface)) {
+                throw new InvalidAddressException(
+                    sprintf(
+                        'Invalid address %s supplied by adapter: %s',
+                        get_class($address),
+                        get_class($adapter)
+                    )
+                );
+            }
+        }
+
+        return $addresses;
     }
 
     /**
      * Get an address for the supplied request parameters.
      *
      * @param string[] $params
-     * @return AddressInterface
+     * @return AddressInterface[]
      */
-    public function getAddressFromRequestParams(array $params)
+    public function getAddressesFromRequestParams(array $params)
     {
-        return $this->getAddress(
+        return $this->getAddresses(
             $this->createRequest($params)
         );
     }
@@ -104,11 +108,11 @@ class Service implements ServiceInterface
      * Get an address for the supplied Magento App Request.
      *
      * @param RequestInterface $request
-     * @return AddressInterface
+     * @return AddressInterface[]
      */
-    public function getAddressFromRequest(RequestInterface $request)
+    public function getAddressesFromRequest(RequestInterface $request)
     {
-        return $this->getAddressFromRequestParams(
+        return $this->getAddressesFromRequestParams(
             $request->getParams()
         );
     }

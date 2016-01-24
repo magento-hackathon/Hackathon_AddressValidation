@@ -22,11 +22,11 @@ interface AdapterInterface
      * Get an address for the supplied address request.
      *
      * @param AddressRequestInterface $request
-     * @return AddressInterface
+     * @return AddressInterface[]
      * @throws AddressNotFoundException when the request could not resolve to
      *   an address.
      * @throws InvalidAddressException when the adapter resolved to an
      *   invalid address.
      */
-    public function getAddress(AddressRequestInterface $request);
+    public function getAddresses(AddressRequestInterface $request);
 }

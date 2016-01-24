@@ -16,7 +16,7 @@ class MediaCTAdapter extends AdapterAbstract
      * Process the supplied address request and deliver an address entity.
      *
      * @param AddressRequestInterface $request
-     * @return AddressInterface|null
+     * @return AddressInterface[]
      */
     protected function processAddressRequest(
         AddressRequestInterface $request
@@ -36,6 +36,6 @@ class MediaCTAdapter extends AdapterAbstract
             $address->setStreet(['ZuiderPark', $request->getStreet2()]);
         }
 
-        return $address;
+        return [$address];
     }
 }
