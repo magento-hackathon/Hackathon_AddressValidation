@@ -41,30 +41,16 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $responseData = [
-            'valid' => false,
-            'suggestions' => []
-        ];
-        $address = null;
+        $addresses = [];
 
         try {
-            $address = $this
+            $addresses = $this
                 ->addressLookupService
-                ->getAddressFromRequest(
+                ->getAddressesFromRequest(
                     $this->getRequest()
                 );
-            $responseData['valid'] = true;
         } catch (AddressException $e) {
             // Nothing to do here.
-        }
-
-        if ($address instanceof AddressInterface) {
-            $responseData['suggestions'][] = [
-                AddressInterface::KEY_CITY => $address->getCity(),
-                AddressInterface::KEY_COMPANY => $address->getCompany(),
-                AddressInterface::KEY_POSTCODE => $address->getPostcode(),
-                AddressInterface::KEY_STREET => $address->getStreet()
-            ];
         }
 
         /** @var Interceptor $response */
@@ -72,8 +58,36 @@ class Index extends \Magento\Framework\App\Action\Action
             ->resultFactory
             ->create(ResultFactory::TYPE_JSON);
 
-        $response->setData($responseData);
+        $response->setData([
+            'valid' => !empty($addresses),
+            'suggestions' => array_map(
+                [$this, 'convertAddressToSuggestion'],
+                $addresses
+            )
+        ]);
 
         return $response;
+    }
+
+    /**
+     * Convert the address into an array of key-value-pairs.
+     *
+     * @param AddressInterface $address
+     * @return string[]|string[][]
+     */
+    protected function convertAddressToSuggestion(AddressInterface $address)
+    {
+        return array_filter(
+            [
+                AddressInterface::KEY_CITY => $address->getCity(),
+                AddressInterface::KEY_COMPANY => $address->getCompany(),
+                AddressInterface::KEY_POSTCODE => $address->getPostcode(),
+                AddressInterface::KEY_STREET => $address->getStreet(),
+                AddressInterface::KEY_COUNTRY_ID => $address->getCountryId(),
+                AddressInterface::KEY_REGION_ID => $address->getRegionId(),
+                AddressInterface::KEY_REGION => $address->getRegion(),
+                AddressInterface::KEY_REGION_CODE => $address->getRegionCode()
+            ]
+        );
     }
 }
