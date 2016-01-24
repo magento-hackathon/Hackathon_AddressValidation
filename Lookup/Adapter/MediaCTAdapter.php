@@ -22,9 +22,9 @@ class MediaCTAdapter extends AdapterAbstract
         AddressRequestInterface $request
     ) {
         $address = null;
-
         if ($request->getPostCode() === '9724AH'
-            && $request->getStreet2() === '22'
+            // Check the second index of the list of streets.
+            && $request->getStreet(1) === '22'
         ) {
             $address = $this
                 ->getAddressFactory()
@@ -33,7 +33,7 @@ class MediaCTAdapter extends AdapterAbstract
             $address->setCity('Groningen');
             $address->setCompany('MediaCT B.V.');
             $address->setPostcode($request->getPostCode());
-            $address->setStreet(['ZuiderPark', $request->getStreet2()]);
+            $address->setStreet(['ZuiderPark', $request->getStreet(1)]);
         }
 
         return $address;
