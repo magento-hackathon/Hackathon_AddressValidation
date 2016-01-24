@@ -29,4 +29,12 @@ interface AdapterInterface
      *   invalid address.
      */
     public function getAddresses(AddressRequestInterface $request);
+
+    /**
+     * Whether the current adapter can handle the given request for addresses.
+     *
+     * @param AddressRequestInterface $request
+     * @return boolean
+     */
+    public function canHandleRequest(AddressRequestInterface $request);
 }

@@ -38,4 +38,20 @@ class MediaCTAdapter extends AdapterAbstract
 
         return [$address];
     }
+
+    /**
+     * Get a list of properties that are required by the current adapter.
+     *
+     * @return string[]
+     */
+    protected function getRequiredProperties()
+    {
+        return [
+            AddressInterface::KEY_POSTCODE,
+            implode(
+                static::PROPERTY_INDEX_SEPARATOR,
+                [AddressInterface::KEY_STREET, 1]
+            )
+        ];
+    }
 }

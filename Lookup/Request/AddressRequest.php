@@ -148,4 +148,60 @@ class AddressRequest implements AddressRequestInterface
     {
         return $this->city;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasCountryId()
+    {
+        return !empty($this->countryId);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRegionId()
+    {
+        return !empty($this->regionId);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRegion()
+    {
+        return !empty($this->region);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRegionCode()
+    {
+        return !empty($this->regionCode);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStreet($index = 0)
+    {
+        return !empty($this->streets[$index]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPostCode()
+    {
+        return !empty($this->postCode);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCity()
+    {
+        return !empty($this->city);
+    }
 }
