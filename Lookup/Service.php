@@ -6,7 +6,7 @@
 
 namespace Hackathon\AddressValidation\Lookup;
 
-use Hackathon\AddressValidation\Lookup\Adapter\AddressFactory;
+use Hackathon\AddressValidation\Lookup\Adapter\AdapterFactory;
 use Hackathon\AddressValidation\Lookup\Request\AddressRequest;
 use Hackathon\AddressValidation\Lookup\Request\AddressRequestInterface;
 use Magento\Framework\App\RequestInterface;
@@ -15,15 +15,15 @@ use Magento\Quote\Api\Data\AddressInterface;
 class Service implements ServiceInterface
 {
     /**
-     * @var AddressFactory
+     * @var AdapterFactory
      */
     protected $adapterFactory;
 
     /**
      * Service constructor.
-     * @param AddressFactory $adapterFactory
+     * @param AdapterFactory $adapterFactory
      */
-    public function __construct(AddressFactory $adapterFactory)
+    public function __construct(AdapterFactory $adapterFactory)
     {
         $this->adapterFactory = $adapterFactory;
     }
