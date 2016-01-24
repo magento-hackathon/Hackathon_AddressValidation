@@ -23,14 +23,18 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     protected $addressLookupService;
 
+    /**
+     * Index constructor.
+     *
+     * @param Context $context
+     * @param ServiceInterface $addressLookupService
+     */
     public function __construct(
-        Context $context//,
-        //ServiceInterface $addressLookupService
+        Context $context,
+        ServiceInterface $addressLookupService
     ) {
         parent::__construct($context);
-        $this->addressLookupService = $this
-            ->_objectManager
-            ->get('Hackathon\AddressValidation\Lookup\Service');
+        $this->addressLookupService = $addressLookupService;
     }
 
     /**
