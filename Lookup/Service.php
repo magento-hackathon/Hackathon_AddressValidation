@@ -33,21 +33,14 @@ class Service implements ServiceInterface
      *
      * @param AddressRequestInterface $request
      * @return AddressInterface[]
-     * @throws InvalidAddressException when no country code is set.
      * @throws InvalidAddressException when an adapter returned an invalid
      *   address entity.
      * @throws AddressNotFoundException when no address can be found.
      */
     public function getAddresses(AddressRequestInterface $request)
     {
-        $countryCode = $request->getCountryId();
-
-        if (empty($countryCode)) {
-            throw new InvalidAddressException('Missing country code');
-        }
-
         $adapter = null;
-        $adapters = $this->adapterFactory->create($countryCode);
+        $adapters = $this->adapterFactory->create($request);
 
         $addresses = [];
 

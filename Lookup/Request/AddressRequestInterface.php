@@ -56,4 +56,39 @@ interface AddressRequestInterface
      * @return string|null
      */
     public function getCity();
+
+    /**
+     * @return bool
+     */
+    public function hasCountryId();
+
+    /**
+     * @return bool
+     */
+    public function hasRegionId();
+
+    /**
+     * @return bool
+     */
+    public function hasRegion();
+
+    /**
+     * @return bool
+     */
+    public function hasRegionCode();
+
+    /**
+     * @return bool
+     */
+    public function hasStreet($index = 0);
+
+    /**
+     * @return bool
+     */
+    public function hasPostCode();
+
+    /**
+     * @return bool
+     */
+    public function hasCity();
 }
