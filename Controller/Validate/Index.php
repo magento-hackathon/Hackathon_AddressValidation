@@ -13,7 +13,6 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json\Interceptor;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Quote\Api\Data\AddressInterface;
-use Magento\TestFramework\Event\Magento;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
