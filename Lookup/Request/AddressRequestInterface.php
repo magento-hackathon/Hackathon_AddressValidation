@@ -34,14 +34,18 @@ interface AddressRequestInterface
     public function getRegionCode();
 
     /**
-     * @return string|null
+     * @return string[]
      */
-    public function getStreet();
+    public function getStreets();
 
     /**
+     * Get the street for the given index, or the first street if no index
+     * was specified.
+     *
+     * @param int $index
      * @return string|null
      */
-    public function getStreet2();
+    public function getStreet($index = 0);
 
     /**
      * @return string|null

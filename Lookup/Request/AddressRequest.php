@@ -32,14 +32,9 @@ class AddressRequest implements AddressRequestInterface
     protected $regionCode;
 
     /**
-     * @var string|null
+     * @var string[]
      */
-    protected $street;
-
-    /**
-     * @var string|null
-     */
-    protected $street2;
+    protected $streets = [];
 
     /**
      * @var string|null
@@ -59,13 +54,9 @@ class AddressRequest implements AddressRequestInterface
             AddressInterface::KEY_REGION => 'region',
             AddressInterface::KEY_REGION_CODE => 'regionCode',
             AddressInterface::KEY_POSTCODE => 'postCode',
-            AddressInterface::KEY_CITY => 'city'
+            AddressInterface::KEY_CITY => 'city',
+            AddressInterface::KEY_STREET => 'streets'
         ];
-
-        if (!empty($params['street'])) {
-            $this->street = array_shift($params['street']) ?: null;
-            $this->street2 = array_shift($params['street']) ?: null;
-        }
 
         foreach ($indexes as $index => $property) {
             if (!empty($params[$index])) {
@@ -115,23 +106,27 @@ class AddressRequest implements AddressRequestInterface
     }
 
     /**
-     * Street getter.
+     * Streets getter.
      *
-     * @return null|string
+     * @return string[]
      */
-    public function getStreet()
+    public function getStreets()
     {
-        return $this->street;
+        return $this->streets;
     }
 
     /**
-     * Street2 getter.
+     * Get the street for the given index, or the first street if no index
+     * was specified.
      *
+     * @param int $index
      * @return null|string
      */
-    public function getStreet2()
+    public function getStreet($index = 0)
     {
-        return $this->street2;
+        return isset($this->streets[$index])
+            ? (string) $this->streets[$index]
+            : null;
     }
 
     /**
