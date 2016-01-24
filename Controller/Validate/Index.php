@@ -10,6 +10,8 @@ use Hackathon\AddressValidation\Lookup\AddressException;
 use Hackathon\AddressValidation\Lookup\ServiceInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\Result\Json\Interceptor;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Quote\Api\Data\AddressInterface;
 
 class Index extends \Magento\Framework\App\Action\Action
@@ -39,7 +41,7 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $response = [
+        $responseData = [
             'valid' => false,
             'suggestions' => []
         ];
@@ -51,13 +53,13 @@ class Index extends \Magento\Framework\App\Action\Action
                 ->getAddressFromRequest(
                     $this->getRequest()
                 );
-            $response['valid'] = true;
+            $responseData['valid'] = true;
         } catch (AddressException $e) {
             // Nothing to do here.
         }
 
         if ($address instanceof AddressInterface) {
-            $response['suggestions'][] = [
+            $responseData['suggestions'][] = [
                 AddressInterface::KEY_CITY => $address->getCity(),
                 AddressInterface::KEY_COMPANY => $address->getCompany(),
                 AddressInterface::KEY_POSTCODE => $address->getPostcode(),
@@ -65,6 +67,13 @@ class Index extends \Magento\Framework\App\Action\Action
             ];
         }
 
-        die(json_encode($response));
+        /** @var Interceptor $response */
+        $response = $this
+            ->resultFactory
+            ->create(ResultFactory::TYPE_JSON);
+
+        $response->setData($responseData);
+
+        return $response;
     }
 }
