@@ -44,16 +44,16 @@ abstract class AdapterAbstract implements AdapterInterface
      * Get an address for the supplied address request.
      *
      * @param AddressRequestInterface $request
-     * @return AddressInterface
+     * @return AddressInterface[]
      * @throws AddressNotFoundException when the request could not resolve to
      *   an address.
      * @throws InvalidAddressException when the adapter resolved to an
      *   invalid address.
      */
-    final public function getAddress(AddressRequestInterface $request)
+    final public function getAddresses(AddressRequestInterface $request)
     {
         try {
-            $address = $this->processAddressRequest($request);
+            $addresses = $this->processAddressRequest($request);
         } catch (\Exception $e) {
             throw new InvalidAddressException(
                 sprintf(
@@ -63,20 +63,32 @@ abstract class AdapterAbstract implements AdapterInterface
             );
         }
 
-        if (!($address instanceof AddressInterface)) {
+        if (empty($addresses)) {
             throw new AddressNotFoundException(
                 'Could not find an address for the supplied request.'
             );
         }
 
-        return $address;
+        foreach ($addresses as $address) {
+            if (!($address instanceof AddressInterface)) {
+                throw new InvalidAddressException(
+                    sprintf(
+                        'Invalid address %s returned from adapter %s',
+                        get_class($address),
+                        get_class($this)
+                    )
+                );
+            }
+        }
+
+        return $addresses;
     }
 
     /**
      * Process the supplied address request and deliver an address entity.
      *
      * @param AddressRequestInterface $request
-     * @return AddressInterface|null
+     * @return AddressInterface[]
      */
     abstract protected function processAddressRequest(
         AddressRequestInterface $request
