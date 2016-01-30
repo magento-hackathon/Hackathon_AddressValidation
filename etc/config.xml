@@ -14,7 +14,6 @@
                     <mediact_dummy>
                         <label>MediaCT Dummy</label>
                         <class>Hackathon\AddressValidation\Lookup\Adapter\MediaCTAdapter</class>
-                        <enabled>0</enabled>
                     </mediact_dummy>
                 </adapters>
             </address_validation>
