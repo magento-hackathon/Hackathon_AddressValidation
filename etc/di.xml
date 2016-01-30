@@ -9,4 +9,7 @@
     <preference
             for="Hackathon\AddressValidation\Lookup\ServiceInterface"
             type="Hackathon\AddressValidation\Lookup\Service"/>
+    <preference
+            for="Hackathon\AddressValidation\Lookup\ConfigInterface"
+            type="Hackathon\AddressValidation\Lookup\Config"/>
 </config>
