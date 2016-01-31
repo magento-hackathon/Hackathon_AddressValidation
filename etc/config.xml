@@ -16,6 +16,7 @@
                         <class>Hackathon\AddressValidation\Lookup\Adapter\MediaCTAdapter</class>
                     </mediact_dummy>
                 </adapters>
+                <max_suggestions>5</max_suggestions>
             </address_validation>
         </checkout>
     </default>

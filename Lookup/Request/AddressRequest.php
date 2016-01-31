@@ -7,6 +7,7 @@
 namespace Hackathon\AddressValidation\Lookup\Request;
 
 
+use Hackathon\AddressValidation\Lookup\ConfigInterface;
 use Magento\Quote\Api\Data\AddressInterface;
 
 class AddressRequest implements AddressRequestInterface
@@ -46,7 +47,20 @@ class AddressRequest implements AddressRequestInterface
      */
     protected $city;
 
-    public function __construct(array $params = [])
+    /**
+     * The maximum number of suggestions the adapter can make for this request.
+     *
+     * @var integer $maxSuggestions
+     */
+    protected $maxSuggestions;
+
+    /**
+     * AddressRequest constructor.
+     *
+     * @param array $params
+     * @param ConfigInterface $config
+     */
+    public function __construct(array $params, ConfigInterface $config)
     {
         static $indexes = [
             AddressInterface::KEY_COUNTRY_ID => 'countryId',
@@ -63,6 +77,8 @@ class AddressRequest implements AddressRequestInterface
                 $this->{$property} = $params[$index];
             }
         }
+
+        $this->maxSuggestions = $config->getMaxSuggestions();
     }
 
     /**
@@ -203,5 +219,15 @@ class AddressRequest implements AddressRequestInterface
     public function hasCity()
     {
         return !empty($this->city);
+    }
+
+    /**
+     * MaxSuggestions getter.
+     *
+     * @return int
+     */
+    public function getMaxSuggestions()
+    {
+        return $this->maxSuggestions;
     }
 }
