@@ -6,6 +6,7 @@
 
 namespace Hackathon\AddressValidation\Lookup\Adapter;
 
+use Hackathon\AddressValidation\Lookup\Config;
 use Hackathon\AddressValidation\Lookup\Request\AddressRequestInterface;
 use Magento\Quote\Model\Quote\AddressFactory;
 
@@ -24,13 +25,24 @@ class AdapterFactory
     protected $addressFactory;
 
     /**
+     * The lookup configuration.
+     *
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * AddressFactory constructor.
      *
      * @param AddressFactory $addressFactory
+     * @param Config $config
      */
-    public function __construct(AddressFactory $addressFactory)
-    {
+    public function __construct(
+        AddressFactory $addressFactory,
+        Config $config
+    ) {
         $this->addressFactory = $addressFactory;
+        $this->config = $config;
     }
 
     /**
@@ -42,9 +54,21 @@ class AdapterFactory
     public function create(AddressRequestInterface $request)
     {
         return array_filter(
-            [
-                new MediaCTAdapter($this->addressFactory)
-            ],
+            array_map(
+                function (array $adapter) {
+                    $options = !empty($adapter['options'])
+                        ? $adapter['options']
+                        : [];
+
+                    return new $adapter['class'](
+                        $this->addressFactory,
+                        $options
+                    );
+                },
+                $this
+                    ->config
+                    ->getEnabledAdapters()
+            ),
             function (AdapterInterface $adapter) use ($request) {
                 return $adapter->canHandleRequest($request);
             }

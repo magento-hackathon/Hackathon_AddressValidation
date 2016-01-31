@@ -3,5 +3,8 @@
         <preference
                 for="Hackathon\AddressValidation\Lookup\ServiceInterface"
                 type="Hackathon\AddressValidation\Lookup\ServiceInterface"/>
+        <sequence>
+            <module name="Magento_Checkout"/>
+        </sequence>
     </module>
 </config>
