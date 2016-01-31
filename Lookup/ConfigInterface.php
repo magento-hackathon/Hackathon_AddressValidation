@@ -33,4 +33,11 @@ interface ConfigInterface
      * @return array
      */
     public function getEnabledAdapters();
+
+    /**
+     * Get the number of maximum suggestions.
+     *
+     * @return integer
+     */
+    public function getMaxSuggestions();
 }

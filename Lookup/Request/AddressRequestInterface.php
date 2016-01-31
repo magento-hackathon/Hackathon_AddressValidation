@@ -91,4 +91,11 @@ interface AddressRequestInterface
      * @return bool
      */
     public function hasCity();
+
+    /**
+     * Get the number of maximum suggestions.
+     *
+     * @return integer
+     */
+    public function getMaxSuggestions();
 }

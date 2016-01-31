@@ -14,7 +14,13 @@
                     <label>Enable Address Validation</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enabled_adapters" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="max_suggestions" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum number of suggestions</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="enabled_adapters" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Adapters</label>
                     <source_model>Hackathon\AddressValidation\Lookup\Config\AdapterList\Source</source_model>
                     <can_be_empty>1</can_be_empty>

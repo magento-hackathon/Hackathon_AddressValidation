@@ -20,12 +20,22 @@ class Service implements ServiceInterface
     protected $adapterFactory;
 
     /**
-     * Service constructor.
-     * @param AdapterFactory $adapterFactory
+     * @var ConfigInterface
      */
-    public function __construct(AdapterFactory $adapterFactory)
-    {
+    protected $config;
+
+    /**
+     * Service constructor.
+     *
+     * @param AdapterFactory $adapterFactory
+     * @param ConfigInterface $config
+     */
+    public function __construct(
+        AdapterFactory $adapterFactory,
+        ConfigInterface $config
+    ) {
         $this->adapterFactory = $adapterFactory;
+        $this->config = $config;
     }
 
     /**
@@ -70,7 +80,11 @@ class Service implements ServiceInterface
             }
         }
 
-        return $addresses;
+        return array_slice(
+            $addresses,
+            0,
+            $this->config->getMaxSuggestions()
+        );
     }
 
     /**
@@ -94,7 +108,7 @@ class Service implements ServiceInterface
      */
     public function createRequest(array $params)
     {
-        return new AddressRequest($params);
+        return new AddressRequest($params, $this->config);
     }
 
     /**

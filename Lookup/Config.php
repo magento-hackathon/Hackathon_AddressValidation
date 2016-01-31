@@ -37,6 +37,13 @@ class Config implements ConfigInterface
     const CONFIG_PATH_ENABLED_ADAPTERS = 'checkout/address_validation/enabled_adapters';
 
     /**
+     * The config path for the maximum number of suggestions.
+     *
+     * @var string CONFIG_PATH_MAX_SUGGESTIONS
+     */
+    const CONFIG_PATH_MAX_SUGGESTIONS = 'checkout/address_validation/max_suggestions';
+
+    /**
      * @var ScopeConfigInterface
      */
     protected $scopeConfig;
@@ -119,5 +126,19 @@ class Config implements ConfigInterface
         }
 
         return $adapters;
+    }
+
+    /**
+     * Get the number of maximum suggestions.
+     *
+     * @return integer
+     */
+    public function getMaxSuggestions()
+    {
+        return $this->isEnabled()
+            ? (int) $this
+                ->scopeConfig
+                ->getValue(static::CONFIG_PATH_MAX_SUGGESTIONS)
+            : 0;
     }
 }
