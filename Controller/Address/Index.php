@@ -4,7 +4,7 @@
  * https://www.mediact.nl
  */
 
-namespace Hackathon\AddressValidation\Controller\Validate;
+namespace Hackathon\AddressValidation\Controller\Address;
 
 use Hackathon\AddressValidation\Lookup\AddressException;
 use Hackathon\AddressValidation\Lookup\ServiceInterface;
